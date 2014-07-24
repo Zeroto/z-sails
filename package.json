@@ -1,6 +1,6 @@
 {
   "name": "z-sails",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A $httpBackend decorator to use sails socket requests instead of XHR",
   "main": "dist/z-sails.js",
   "directories": {

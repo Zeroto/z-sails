@@ -4,7 +4,7 @@
 
 (function(module){
 
-    module.provider('z-sails', [function(){
+    module.provider('zSails', [function(){
         var self = this;
         self.useFileCheck = true;
         self.useFallback = false;
@@ -19,7 +19,7 @@
     module.config(['$provide', function($provide){
 
         // replace $httpBackend to have it put out sails socket requests instead of XHR
-        $provide.decorator('$httpBackend', ['$delegate', '$browser', 'z-sails', '$window', function($delegate, $browser, zsails, $window){
+        $provide.decorator('$httpBackend', ['$delegate', '$browser', 'zSails', '$window', function($delegate, $browser, zsails, $window){
             var $httpBackend = function(method, url, post, callback, headers, timeout, withCredentials, responseType){
                 $browser.$$incOutstandingRequestCount();
                 url = url || $browser.url();
@@ -37,7 +37,6 @@
                 else
                 {
                     $window.io.socket[methodLowercase](url, angular.fromJson(post), function(data, jwr){
-                        console.log(jwr);
                         if (zsails.useFallback && jwr.statusCode != 200)
                         {
                             $delegate(method, url, post, callback, headers, timeout, withCredentials, responseType);

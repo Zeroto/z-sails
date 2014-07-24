@@ -25,7 +25,7 @@ describe("z-sails", function(){
 	}]));
 	
 	beforeEach(inject(['$injector', function($injector){
-		zSails = $injector.get('z-sails');
+		zSails = $injector.get('zSails');
 	}]));
 	
 	afterEach(function() {
