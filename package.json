@@ -1,0 +1,38 @@
+{
+  "name": "z-sails",
+  "version": "0.0.0",
+  "description": "A $httpBackend decorator to use sails socket requests instead of XHR",
+  "main": "dist/z-sails.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Zeroto/z-sails.git"
+  },
+  "keywords": [
+    "Angular",
+    "Sails",
+    "$http"
+  ],
+  "author": "Sander Homan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zeroto/z-sails/issues"
+  },
+  "homepage": "https://github.com/Zeroto/z-sails",
+  "devDependencies": {
+    "gulp": "^3.8.6",
+    "gulp-concat": "^2.3.4",
+    "gulp-uglify": "^0.3.1",
+    "gulp-sourcemaps": "^1.1.0",
+    "del": "^0.1.1",
+    "gulp-rename": "^1.2.0",
+    "karma-jasmine": "^0.1.5",
+    "gulp-karma": "0.0.4",
+    "gulp-jasmine": "^0.2.0",
+    "gulp-jshint": "^1.7.1",
+    "karma": "^0.12.17",
+    "karma-chrome-launcher": "^0.1.4"
+  }
+}
