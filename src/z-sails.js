@@ -21,7 +21,6 @@
         // replace $httpBackend to have it put out sails socket requests instead of XHR
         $provide.decorator('$httpBackend', ['$delegate', '$browser', 'zSails', '$window', function($delegate, $browser, zsails, $window){
             var $httpBackend = function(method, url, post, callback, headers, timeout, withCredentials, responseType){
-                $browser.$$incOutstandingRequestCount();
                 url = url || $browser.url();
 
                 var lowercaseUrl;
