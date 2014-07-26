@@ -2,10 +2,16 @@ describe("z-sails", function(){
 	
 	beforeEach(module('z-sails'));
 	
-	var $http, zSails, $httpBackend, $window, socket, $rootScope;
+	beforeEach(module(function($provide){
+		$httpXHRBackend = jasmine.createSpy('$httpXHRBackend').and.callFake(function(_,_,_,cb){cb(200, null, null, "");});
+		$provide.value('$httpXHRBackend', $httpXHRBackend);
+	}));
+	
+	var $http, zSails, $httpBackend, $window, socket, $rootScope, $httpXHRBackend;
 	beforeEach(inject(['$injector', function($injector){
 		$http = $injector.get('$http');
-		$httpBackend = $injector.get('$httpBackend').originalBackend;
+		
+		
 		$window = $injector.get('$window');
 		$rootScope = $injector.get('$rootScope');
 		
@@ -17,8 +23,6 @@ describe("z-sails", function(){
 			delete: function(_, _, cb){cb(null, {statusCode: 404, headers: null})},
 		}
 		
-
-		
 		$window.io = {
 			socket: socket
 		};
@@ -28,67 +32,66 @@ describe("z-sails", function(){
 		zSails = $injector.get('zSails');
 	}]));
 	
-	afterEach(function() {
-         $httpBackend.verifyNoOutstandingExpectation();
-         $httpBackend.verifyNoOutstandingRequest();
-       });
-	
-	it ('should use XHR when requesting a file when using the filecheck strategy', function(){
+	it ('should use XHR when requesting a file when using the filecheck strategy', function(done){
 		
 		zSails.useFileCheck = true;
 		zSails.useFallback = false;
 		
-		$httpBackend.expectGET('/template.html').respond(200, '');
-		$http({url: '/template.html', method: 'GET'});
+		$http({url: '/template.html', method: 'GET'})
+			.finally(function(){
+				expect($httpXHRBackend).toHaveBeenCalled();
+				expect($httpXHRBackend.calls.count()).toEqual(1);
+				done();
+			});
 		
-		$httpBackend.flush();
+		$rootScope.$digest();
 	});
 	
-	it ('should use sockets when requesting a resource when using the filecheck strategy', function(){
+	it ('should use sockets when requesting a resource when using the filecheck strategy', function(done){
 		
 		zSails.useFileCheck = true;
 		zSails.useFallback = false;
 		
-		spyOn(socket, "get").andCallThrough();
+		spyOn(socket, "get").and.callThrough();
 				
 		$http({url: '/resource', method: 'GET'}).finally(function(){
 			expect(socket.get).toHaveBeenCalled();
+			expect(socket.get.calls.count()).toEqual(1);
+			done();
 		});
 		
 		$rootScope.$digest();
 	});
 	
-	it ('should use sockets and XHR when using the fallback strategy', function(){
+	it ('should use sockets and XHR when using the fallback strategy', function(done){
 		
 		zSails.useFileCheck = false;
 		zSails.useFallback = true;
 		
-		spyOn(socket, "get").andCallThrough();
-				
-		$httpBackend.expectGET('/template.html').respond(200, '');
+		spyOn(socket, "get").and.callThrough();
 		
 		$http({url: '/template.html', method: 'GET'}).finally(function(){
 			expect(socket.get).toHaveBeenCalled();
+			expect($httpXHRBackend).toHaveBeenCalled();
+			done();
 		});
-		
-		$httpBackend.flush();
+
 		$rootScope.$digest();
 	});
 	
-	it ('should use sockets and XHR when using both strategies when requesting a resource', function(){
+	it ('should use sockets and XHR when using both strategies when requesting a resource', function(done){
 		
 		zSails.useFileCheck = true;
 		zSails.useFallback = true;
 		
-		spyOn(socket, "get").andCallThrough();
+		spyOn(socket, "get").and.callThrough();
 				
-		$httpBackend.expectGET('/resource').respond(200, '');
-		
 		$http({url: '/resource', method: 'GET'}).finally(function(){
 			expect(socket.get).toHaveBeenCalled();
+			expect($httpXHRBackend).toHaveBeenCalled();
+			done();
 		});
 		
-		$httpBackend.flush();
 		$rootScope.$digest();
 	});
 }); 

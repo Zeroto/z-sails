@@ -8,12 +8,13 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 
 var paths = {
-  scripts: ['src/**/*.js'],
+  scripts: ['src/z-sails.js', 'src/**/*.js'],
+  mocks: ['srcMock/**/*.js']
 };
 
 gulp.task('clean', function(cb) {
   // You can use multiple globbing patterns as you would with `gulp.src`
-  del(['dist'], cb);
+  return del(['dist'], cb);
 });
 
 gulp.task('scripts', ['clean'], function() {
@@ -29,6 +30,14 @@ gulp.task('scripts', ['clean'], function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('copyMocks', ['clean'], function(){
+	return gulp.src(paths.mocks)
+    .pipe(sourcemaps.init())
+    .pipe(concat('z-sails-mocks.js'))
+    .pipe(sourcemaps.write('maps'))
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('test', function(){
 	return gulp.src('foobar') // invalid name so karma still loads from config
 	.pipe(karma({
@@ -37,4 +46,4 @@ gulp.task('test', function(){
 	}));
 });
 
-gulp.task('build', ['scripts']);
+gulp.task('build', ['scripts','copyMocks']);

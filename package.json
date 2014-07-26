@@ -28,7 +28,7 @@
     "gulp-sourcemaps": "^1.1.0",
     "del": "^0.1.1",
     "gulp-rename": "^1.2.0",
-    "karma-jasmine": "^0.1.5",
+    "karma-jasmine": "^0.2.0",
     "gulp-karma": "0.0.4",
     "gulp-jasmine": "^0.2.0",
     "gulp-jshint": "^1.7.1",

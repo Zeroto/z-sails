@@ -1,0 +1,1 @@
+{"version":3,"sources":["z-sails-mock.js"],"names":[],"mappings":"AAAA;AACA;AACA","file":"z-sails-mocks.js","sourcesContent":["(function(module){\r\n\tmodule.provider('$httpBackend', angular.mock.$HttpBackendProvider);\r\n})(angular.module('z-sails-mock', []));"],"sourceRoot":"/source/"}

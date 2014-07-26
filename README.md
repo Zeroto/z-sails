@@ -38,4 +38,16 @@ default: false
 
 This strategy first tries to get the url through sails socket requests. If this fails(e.g. 404 status) it will try again using $http/XHR.
 
+## Tests
 
+### Unit-tests
+
+When unit-testing your modules we need to make sure we have access to the mocked $httpBackend. Because of how angular-mocks works(it forces ng and ngMock to load before other modules), z-sails' $httpBackend replaces the mocked $httpBackend. To fix this you will need to load z-sails-mock.js and add the following line to your tests:
+
+    beforeEach(module('z-sails-mock'));
+
+This will put back the angular-mocks' $httpBackend.
+
+### E2E tests
+
+During E2E tests no changes should be needed except the normal ones.
