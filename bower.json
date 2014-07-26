@@ -19,8 +19,11 @@
     "test",
     "tests",
     "src",
+	"srcMock",
+	"testMock",
     "gulpfile.js",
     "karma.conf.js",
+	"karmaMockTest.conf.js",
     "package.json"
   ],
   "dependencies": {
