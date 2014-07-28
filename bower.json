@@ -1,6 +1,6 @@
 {
   "name": "z-sails",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/Zeroto/z-sails",
   "authors": [
     "Sander Homan <homans@nhlrebel.com>"
@@ -19,11 +19,11 @@
     "test",
     "tests",
     "src",
-	"srcMock",
-	"testMock",
+    "srcMock",
+    "testMock",
     "gulpfile.js",
     "karma.conf.js",
-	"karmaMockTest.conf.js",
+    "karmaMockTest.conf.js",
     "package.json"
   ],
   "dependencies": {
