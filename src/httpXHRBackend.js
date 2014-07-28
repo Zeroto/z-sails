@@ -5,7 +5,19 @@
 
 	var lowercase = angular.lowercase;
 	
-	// below is a copy from the angular source. This will require updating when this updates in angular, but it is a low maintenance file, so this will not happen often.
+	
+	// copied from angular.js
+	/**
+	 * IE 11 changed the format of the UserAgent string.
+	 * See http://msdn.microsoft.com/en-us/library/ms537503.aspx
+	 */
+	var msie = int((/msie (\d+)/.exec(lowercase(navigator.userAgent)) || [])[1]);
+	if (isNaN(msie)) {
+	  msie = int((/trident\/.*; rv:(\d+)/.exec(lowercase(navigator.userAgent)) || [])[1]);
+	}
+	
+	
+	// below is a copy of $httpBackend from the angular source. This will require updating when this updates in angular, but it is a low maintenance file, so this will not happen often.
 
 	function createXhr(method) {
 		//if IE and the method is not RFC2616 compliant, or if XMLHttpRequest
