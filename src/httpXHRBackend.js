@@ -4,6 +4,10 @@
 	module.provider('$httpXHRBackend', $HttpBackendProvider);
 
 	var lowercase = angular.lowercase;
+	var forEach = angular.forEach;
+	var isDefined = angular.isDefined;
+	var isFunction = angular.isFunction;
+	var noop = angular.noop;
 	
 	
 	// copied from angular.js
@@ -14,6 +18,21 @@
 	var msie = int((/msie (\d+)/.exec(lowercase(navigator.userAgent)) || [])[1]);
 	if (isNaN(msie)) {
 	  msie = int((/trident\/.*; rv:(\d+)/.exec(lowercase(navigator.userAgent)) || [])[1]);
+	}
+	
+	var addEventListenerFn = (window.document.addEventListener
+      ? function(element, type, fn) {element.addEventListener(type, fn, false);}
+      : function(element, type, fn) {element.attachEvent('on' + type, fn);});
+    var removeEventListenerFn = (window.document.removeEventListener
+      ? function(element, type, fn) {element.removeEventListener(type, fn, false); }
+      : function(element, type, fn) {element.detachEvent('on' + type, fn); });
+	
+	function isPromiseLike(obj) {
+	  return obj && isFunction(obj.then);
+	}
+	
+	function int(str) {
+	  return parseInt(str, 10);
 	}
 	
 	
