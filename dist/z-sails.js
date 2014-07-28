@@ -34,7 +34,14 @@
 			}
 			else
 			{
-				$window.io.socket[methodLowercase](url, angular.fromJson(post), function(data, jwr){
+				// build request options
+				var options = {
+					method: methodLowercase,
+					url: url,
+					headers: headers,
+					data: angular.fromJson(post)
+				};
+				$window.io.socket._request(options, function(data, jwr){
 					if (zsails.useFallback && jwr.statusCode != 200)
 					{
 						$httpXHRBackend(method, url, post, callback, headers, timeout, withCredentials, responseType);

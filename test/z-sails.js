@@ -17,10 +17,7 @@ describe("z-sails", function(){
 		
 		// set up the mock socket
 		socket = {
-			get: function(_, _, cb){cb(null, {statusCode: 404, headers: null})},
-			post: function(_, _, cb){cb(null, {statusCode: 404, headers: null})},
-			put: function(_, _, cb){cb(null, {statusCode: 404, headers: null})},
-			delete: function(_, _, cb){cb(null, {statusCode: 404, headers: null})},
+			_request: function(_, cb){cb(null, {statusCode: 404, headers: null})},
 		}
 		
 		$window.io = {
@@ -40,7 +37,6 @@ describe("z-sails", function(){
 		$http({url: '/template.html', method: 'GET'})
 			.finally(function(){
 				expect($httpXHRBackend).toHaveBeenCalled();
-				expect($httpXHRBackend.calls.count()).toEqual(1);
 				done();
 			});
 		
@@ -52,11 +48,10 @@ describe("z-sails", function(){
 		zSails.useFileCheck = true;
 		zSails.useFallback = false;
 		
-		spyOn(socket, "get").and.callThrough();
+		spyOn(socket, "_request").and.callThrough();
 				
 		$http({url: '/resource', method: 'GET'}).finally(function(){
-			expect(socket.get).toHaveBeenCalled();
-			expect(socket.get.calls.count()).toEqual(1);
+			expect(socket._request).toHaveBeenCalled();
 			done();
 		});
 		
@@ -68,10 +63,10 @@ describe("z-sails", function(){
 		zSails.useFileCheck = false;
 		zSails.useFallback = true;
 		
-		spyOn(socket, "get").and.callThrough();
+		spyOn(socket, "_request").and.callThrough();
 		
 		$http({url: '/template.html', method: 'GET'}).finally(function(){
-			expect(socket.get).toHaveBeenCalled();
+			expect(socket._request).toHaveBeenCalled();
 			expect($httpXHRBackend).toHaveBeenCalled();
 			done();
 		});
@@ -84,10 +79,10 @@ describe("z-sails", function(){
 		zSails.useFileCheck = true;
 		zSails.useFallback = true;
 		
-		spyOn(socket, "get").and.callThrough();
+		spyOn(socket, "_request").and.callThrough();
 				
 		$http({url: '/resource', method: 'GET'}).finally(function(){
-			expect(socket.get).toHaveBeenCalled();
+			expect(socket._request).toHaveBeenCalled();
 			expect($httpXHRBackend).toHaveBeenCalled();
 			done();
 		});
